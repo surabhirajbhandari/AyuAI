@@ -10,7 +10,7 @@ model = load_model("ayurai_model.h5")
 label_encoder = joblib.load("label_encoder.pkl")
 column_template = pd.read_csv("sample_model_input_columns.csv", header=None).values[0].tolist()
 
-st.title("🧘‍♀️ AyurAI – Discover Your Dosha 🌿")
+st.title("AyurAI – Discover Your Dosha")
 st.markdown("Answer a few questions and let AyurAI predict your dominant dosha and offer personalized recommendations.")
 
 # User form inputs (25+ features)
@@ -40,7 +40,7 @@ with st.form("dosha_quiz"):
     eyes = st.selectbox("Eye type?", ["Small,Dry", "Sharp,Red", "Large,Attractive"])
     walk_style = st.selectbox("Your walking style is?", ["Fast", "Moderate", "Slow"])
     perspiration = st.selectbox("Level of perspiration?", ["Less", "Moderate", "Excessive"])
-    submit = st.form_submit_button("🔍 Predict My Dosha")
+    submit = st.form_submit_button("Predict My Dosha")
 
 if submit:
     user_input = pd.DataFrame([{
@@ -77,12 +77,12 @@ if submit:
     prediction = model.predict(user_encoded.astype(np.float32).values)
     dosha = label_encoder.inverse_transform([np.argmax(prediction)])
 
-    st.success(f"🌸 You are primarily **{dosha[0]}** dosha.")
+    st.success(f" You are primarily **{dosha[0]}** dosha.")
 
     # Recommend herbs and tips
     if dosha[0] == "Vata":
-        st.markdown("**🌿 Recommendations for Vata:** Warm, moist foods, oils, ashwagandha, ginger tea, meditation.")
+        st.markdown("**Recommendations for Vata:** Warm, moist foods, oils, ashwagandha, ginger tea, meditation.")
     elif dosha[0] == "Pitta":
-        st.markdown("**🧊 Recommendations for Pitta:** Cooling foods, aloe vera, coconut water, time in nature.")
+        st.markdown("**Recommendations for Pitta:** Cooling foods, aloe vera, coconut water, time in nature.")
     elif dosha[0] == "Kapha":
-        st.markdown("**🔥 Recommendations for Kapha:** Light, spicy foods, turmeric, early wake-up, vigorous exercise.")
+        st.markdown("**Recommendations for Kapha:** Light, spicy foods, turmeric, early wake-up, vigorous exercise.")
